@@ -14,14 +14,14 @@ buildscript {
     }
 }
 
-configurations {
-    embed
-    compile.extendsFrom(embed)
-}
-
 plugins {
     id "kotlin"
     id "com.github.johnrengelman.shadow" version "5.1.0"
+}
+
+configurations {
+    embed
+    compile.extendsFrom(embed)
 }
 
 sourceCompatibility = 1.8
@@ -66,7 +66,6 @@ jar {
 shadowJar {
     baseName = 'LibInstallerBuild'
     classifier = null
-    version = version
     manifest {
         inheritFrom project.tasks.jar.manifest
     }
