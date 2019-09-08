@@ -11,6 +11,11 @@ buildscript {
     }
 }
 
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
 apply plugin: 'kotlin'
 
 sourceCompatibility = 1.8
@@ -39,10 +44,13 @@ processResources {
 }
 
 jar {
+    dependsOn configurations.compile
+    from {
+        configurations.embed.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
     exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
-}
-
-jar {
     manifest.attributes(
         "Manifest-Version": 1.0,
         "Main-Class": ""
