@@ -1,3 +1,6 @@
 package com.hyperiumjailbreak
 
-public class InstallerMain {}
+class InstallerMain {
+    fun main() {
+    }
+}
