@@ -30,7 +30,7 @@ dependencies {
 
 repositories {
     maven {
-        url "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/jitpack-proxy"
+        url "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/maven-central-proxy"
     }
 }
 
