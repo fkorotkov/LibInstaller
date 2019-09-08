@@ -19,7 +19,10 @@ configurations {
     compile.extendsFrom(embed)
 }
 
-apply plugin: 'kotlin'
+plugins {
+    id "kotlin"
+    id "com.github.johnrengelman.shadow" version "5.1.0"
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -58,4 +61,13 @@ jar {
         "Manifest-Version": 1.0,
         "Main-Class": ""
     )
+}
+
+shadowJar {
+    baseName = 'LibInstallerBuild'
+    classifier = null
+    version = version
+    manifest {
+        inheritFrom project.tasks.jar.manifest
+    }
 }
