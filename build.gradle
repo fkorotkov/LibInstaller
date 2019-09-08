@@ -1,20 +1,15 @@
 buildscript {
     repositories {
         maven {
-            url "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/gradle-plugin-proxy"
-        }
-        maven {
             url "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/maven-central-proxy"
         }
     }
     dependencies {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:5.1.0'
     }
 }
 
 apply plugin: 'kotlin'
-apply plugin: 'com.github.johnrengelman.shadow'
 
 version = "0.1"
 
@@ -49,7 +44,7 @@ processResources {
 }
 
 jar {
-    dependsOn configurations.compile, shadowJar
+    dependsOn configurations.compile
     from {
         configurations.embed.collect {
             it.isDirectory() ? it : zipTree(it)
@@ -60,10 +55,4 @@ jar {
         "Manifest-Version": 1.0,
         "Main-Class": "com.hyperiumjailbreak.InstallerMain"
     )
-}
-
-shadowJar {
-    manifest {
-        inheritFrom project.tasks.jar.manifest
-    }
 }
