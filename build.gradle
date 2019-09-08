@@ -30,6 +30,7 @@ archivesBaseName = "LibInstaller"
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.50'
+    compile 'com.google.code.gson:gson:2.2.4'
 }
 
 repositories {
@@ -57,13 +58,11 @@ jar {
     exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
     manifest.attributes(
         "Manifest-Version": 1.0,
-        "Main-Class": ""
+        "Main-Class": "com.hyperiumjailbreak.InstallerMain"
     )
 }
 
 shadowJar {
-    baseName = 'LibInstallerBuild'
-    classifier = null
     manifest {
         inheritFrom project.tasks.jar.manifest
     }
