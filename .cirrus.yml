@@ -1,7 +1,7 @@
 task:
   auto_cancellation: $CIRRUS_BRANCH != 'master' || $CIRRUS_TAG != ''
   container:
-    image: gradle:jdk8
+    dockerfile: .ci/Dockerfile
   gradle_cache:
     folder: ~/.gradle/caches
     fingerprint_script: cat build.gradle
