@@ -74,6 +74,6 @@ shadowJar {
         inheritFrom project.tasks.jar.manifest
     }
     configurations = [project.configurations.compile, project.configurations.embed]
-    relocate 'org.apache.http', 'cc.hyperium.installer.http'
+    relocate 'org.apache.http', 'com.hyperiumjailbreak.http'
     minimize()
 }
