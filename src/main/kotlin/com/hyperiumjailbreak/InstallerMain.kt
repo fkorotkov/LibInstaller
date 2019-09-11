@@ -1,11 +1,19 @@
 package com.hyperiumjailbreak
 
-import com.hyperiumjailbreak.fx.InstallerApp
-import tornadofx.*
+import com.hyperiumjailbreak.stylesheet.MaterialStylesheet
+import com.hyperiumjailbreak.view.StartupView
+import javafx.scene.image.Image
+import javafx.stage.Stage
+import tornadofx.App
+import tornadofx.FX
+import tornadofx.launch
 
-@Suppress("unused")
-class InstallerMain {
+
+object InstallerMain {
+    @JvmStatic
     fun main(args: Array<String>) {
-        launch<InstallerApp>(args)
+        launch<InstallerApp>()
     }
 }
+
+class InstallerApp : App(StartupView::class, MaterialStylesheet::class)
