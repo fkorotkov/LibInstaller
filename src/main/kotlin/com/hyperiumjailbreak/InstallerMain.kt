@@ -15,11 +15,6 @@ class InstallerMain {
 
     fun fail(reason: String) {
         logger.fatal(reason)
-        fail(Exception(reason))
-    }
-
-    fun fail(reason: Exception) {
-        logger.fatal(reason.getStackTrace().toString())
     }
 }
 
