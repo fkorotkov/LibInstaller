@@ -7,17 +7,17 @@ import java.io.File
 import java.io.IOException
 
 class Install {
-    fun do() {
-        @JvmStatic val sep = File.separator;
+    fun doInstall() {
+        val sep = File.separator;
         val mc = File(config.getDir());
 
-        mc.exists() ? InstallerMain.logger.info("Found MC Dir") : InstallerMain.fail("No MC Dir")
+        mc.exists() ? InstallerMain.logger.info("Found MC Dir") ; InstallerMain.fail("No MC Dir")
 
         val versions = File(mc, "versions")
         val origin = File(versions, "1.8.9")
         val originJson = File(origin, "1.8.9.json")
         val originJar = File(origin, "1.8.9.jar")
-        (!origin.exists() || !originJson.exists() || !originJar.exists()) ? InstallerMain.fail("You need to run Minecraft 1.8.9 first!") : () -> {}
+        (!origin.exists() || !originJson.exists() || !originJar.exists()) ? InstallerMain.fail("You need to run Minecraft 1.8.9 first!") ; () ->
 
         val target = File(versions, "Hyperium 1.8.9")
         val libs = File(mc, "libraries")

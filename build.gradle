@@ -3,6 +3,9 @@ buildscript {
         maven {
             url "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/maven-central-proxy"
         }
+        maven {
+            url "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/jcenter-proxy"
+        }
     }
     dependencies {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50'
