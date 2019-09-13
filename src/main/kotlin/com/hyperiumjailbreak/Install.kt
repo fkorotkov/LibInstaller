@@ -10,7 +10,7 @@ import java.io.IOException
 class Install {
     fun doInstall() {
         val sep = File.separator
-        val mc = File(config.getDir())
+        val mc = minecraftDir()
 
         if(mc.exists()) {
             InstallerMain.logger.info("Found MC Dir")
