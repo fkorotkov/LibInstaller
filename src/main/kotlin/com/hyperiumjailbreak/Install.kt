@@ -32,16 +32,16 @@ class Install {
             FileUtils.deleteDirectory(target)
         }
 
-        val local = File(ProtectionDomain.class.getProtectionDomain().getCodeSource().getLocation().toURI())
+        val local = File(ProtectionDomain.class.protectionDomain.codeSource.location.uri)
         val localLib = File(libs, "cc" + sep + "hyperium" + sep + "Hyperium" + sep + "LOCAL" + sep + "Hyperium-LOCAL.jar")
         try {
             localLib.getParentFile().mkdirs()
-            Files.copy(local, new File(localLib.parent, localLib.getName())
+            Files.copy(local, new File(localLib.parent, localLib.name)
         } catch (e: IOException) {
             InstallerMain.logger.fatal(e.message)
             InstallerMain.fail("Couldn't copy local Jar")
         }
 
-        val tmpDir = File(java.nio.Files.createTempDirectory("Hyperium").toFile())
+        val tmpDir = File(java.nio.Files.createTempDirectory("Hyperium").file)
     }
 }
