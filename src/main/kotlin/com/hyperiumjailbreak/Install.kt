@@ -1,5 +1,6 @@
 package com.hyperiumjailbreak
 
+import com.hyperiumjailbreak.*
 import cc.hyperium.installer.ProtectionDomain
 import org.apache.commons.io.FileUtils
 import com.google.common.io.Files
@@ -23,7 +24,7 @@ class Install {
         val originJson = File(origin, "1.8.9.json")
         val originJar = File(origin, "1.8.9.jar")
         if(!origin.exists() || !originJson.exists() || !originJar.exists())
-            InstallerMain.fail("You need to run Minecraft 1.8.9 first!")
+            fail("You need to run Minecraft 1.8.9 first!")
 
         val target = File(versions, "Hyperium 1.8.9")
         val libs = File(mc, "libraries")
@@ -38,8 +39,8 @@ class Install {
             localLib.getParentFile().mkdirs()
             Files.copy(local, new File(localLib.parent, localLib.name)
         } catch (e: IOException) {
-            InstallerMain.logger.fatal(e.message)
-            InstallerMain.fail("Couldn't copy local Jar")
+            logger.fatal(e.message)
+            fail("Couldn't copy local Jar")
         }
 
         val tmpDir = File(java.nio.Files.createTempDirectory("Hyperium").file)
