@@ -6,16 +6,14 @@ import tornadofx.App
 import tornadofx.launch
 import org.apache.logging.log4j.LogManager
 
-class InstallerMain {
-    val logger = LogManager.getLogger()
+public val logger = LogManager.getLogger()
 
-    fun main() {
-        launch<InstallerApp>()
-    }
+fun main() {
+    launch<InstallerApp>()
+}
 
-    fun fail(reason: String) {
-        logger.fatal(reason)
-    }
+public fun fail(reason: String) {
+    logger.fatal(reason)
 }
 
 class InstallerApp : App(StartupView::class, MaterialStylesheet::class)
