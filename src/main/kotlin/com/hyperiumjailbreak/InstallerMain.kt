@@ -2,17 +2,17 @@ package com.hyperiumjailbreak
 
 import com.hyperiumjailbreak.stylesheet.MaterialStylesheet
 import com.hyperiumjailbreak.view.StartupView
+import org.apache.logging.log4j.LogManager
 import tornadofx.App
 import tornadofx.launch
-import org.apache.logging.log4j.LogManager
 
-public val logger = LogManager.getLogger()
+val logger = LogManager.getLogger()!!
 
 fun main() {
     launch<InstallerApp>()
 }
 
-public fun fail(reason: String) {
+fun fail(reason: String) {
     logger.fatal(reason)
 }
 

@@ -1,14 +1,13 @@
 package com.hyperiumjailbreak
 
-import com.hyperiumjailbreak.*
 import cc.hyperium.installer.ProtectionDomain
-import org.apache.commons.io.FileUtils
 import com.google.common.io.Files
+import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.IOException
 
 class Install {
-    fun doInstall() {
+    fun install() {
         val sep = File.separator
         val mc = minecraftDir()
 
