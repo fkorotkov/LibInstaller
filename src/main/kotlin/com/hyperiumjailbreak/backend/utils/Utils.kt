@@ -73,7 +73,8 @@ object Utils {
         val p = theProfile(instant)
     }
 
-    fun theProfile(instant: Instant) {
+    private fun theProfile(instant: Instant) {
+        val sep = File.separator
         val profile = JsonHolder()
                 .put("name", "Hyperium 1.8.9")
                 .put("type", "custom")
@@ -84,7 +85,7 @@ object Utils {
                 .put("icon", iconInBase64)
         if (System.getProperty("java.version").startsWith("1.8"))
             if (System.getProperty("sun.arch.data.model", "").equals("64", ignoreCase = true)) {
-                val file = File(System.getProperty("java.home"), "bin" + sep + "java" + if (InstallerUtils.getOS() === InstallerUtils.OSType.Windows) "w.exe" else "")
+                val file = File(System.getProperty("java.home"), "bin" + sep + "java" + if (getOS() === Windows) "w.exe" else "")
                 if (file.exists())
                     profile.put("javaDir", file.absolutePath)
             }
