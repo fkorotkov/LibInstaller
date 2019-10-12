@@ -6,9 +6,10 @@ import tornadofx.action
 import tornadofx.borderpane
 import tornadofx.button
 
-class InstallationView : View("Hyperium Jailbreak - Installer") {
+class InstallationView : View("HyperiumJailbreak - Installer") {
     override val root = borderpane {
         center = button("Starting Install...") {
+            setMinSize(1200.0, 800.0)
             action {
                 InstallationUtils.install()
                 if (InstallationUtils.callback.getCallbackCode() == 2) {

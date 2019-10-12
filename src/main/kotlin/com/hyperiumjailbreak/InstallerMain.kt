@@ -2,7 +2,6 @@ package com.hyperiumjailbreak
 
 import com.hyperiumjailbreak.stylesheet.MaterialStylesheet
 import com.hyperiumjailbreak.view.StartupView
-import org.apache.logging.log4j.LogManager
 import tornadofx.App
 import tornadofx.launch
 

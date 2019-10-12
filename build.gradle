@@ -14,6 +14,7 @@ buildscript {
 }
 
 apply plugin: 'kotlin'
+apply plugin: 'java'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 version = "0.1"
@@ -49,6 +50,9 @@ compileKotlin {
     kotlinOptions.jvmTarget= "1.8"
 }
 
+compileJava.options.encoding = 'UTF-8'
+compileJava.options.compilerArgs << "-Xlint:none"
+
 processResources {
     inputs.files "src/main/resources"
     outputs.dir "build/classes/main"
@@ -73,9 +77,21 @@ jar {
     )
 }
 
+task sourceJar(type: Jar, dependsOn: 'jar') {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives shadowJar
+}
+
 shadowJar {
+    dependsOn sourceJar
     manifest {
-        inheritFrom project.tasks.jar.manifest
+        project.tasks.jar.manifest
     }
     configurations = [project.configurations.compile, project.configurations.embed]
     relocate 'org.apache.http', 'com.hyperiumjailbreak.http'

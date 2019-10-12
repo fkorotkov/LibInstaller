@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager
 import java.io.File
 import java.io.IOException
 
+@Suppress("UnstableApiUsage")
 object InstallationUtils {
     private val logger = LogManager.getLogger()!!
     val callback = Callback()
@@ -22,7 +23,6 @@ object InstallationUtils {
         if (!mc.exists()) {
             logger.fatal("No MC Dir")
         } else {
-
             val versions = File(mc, "versions")
             val origin = File(versions, "1.8.9")
             val originJson = File(origin, "1.8.9.json")
@@ -32,7 +32,6 @@ object InstallationUtils {
                 callback.sendCode(2)
                 logger.fatal("No 1.8.9")
             } else {
-
                 val target = File(versions, "Hyperium 1.8.9")
                 val libs = File(mc, "libraries")
 
@@ -46,12 +45,15 @@ object InstallationUtils {
                     localLib.parentFile.mkdirs()
                     Files.copy(local, File(localLib.parent, localLib.name))
                 } catch (e: IOException) {
-                    logger.fatal("H ${e.message} MC Dir: $mc")
+                    logger.fatal("${e.message} MC Dir: $mc")
                     callback.sendCode(2)
                     callback.sendText("Couldn't copy local Jar")
                 }
 
+
                 val tmpDir = Files.createTempDir().renameTo(File("Hyperium"))
+
+                val theJsonStuff = Utils.buildVersionJson(mc)
             }
         }
     }
