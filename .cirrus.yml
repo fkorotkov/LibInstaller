@@ -1,0 +1,10 @@
+build_task:
+  container:
+    image: gradle:jdk8
+  build_script: |
+    gradle build
+    gradle sourceJar
+    gradle shadowJar
+  build_artifacts:
+    path: build/libs/**
+    type: application/java-archive

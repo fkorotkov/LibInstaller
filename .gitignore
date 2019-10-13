@@ -27,3 +27,5 @@ src/main/java/cc/hyperium/e.*
 hs_err_pid*
 
 .idea
+out
+**/scratch.*
