@@ -34,10 +34,10 @@ object Utils {
 
     @Suppress("UnstableApiUsage")
     fun buildVersionJson(mc: File) {
-        val versions = File(mc, "versions")
-        val target = File(versions, "Hyperium 1.8.9")
+        val versions: File = File(mc, "versions")
+        val target: File = File(versions, "Hyperium 1.8.9")
         target.mkdirs()
-        val origin = File(versions, "1.8.9")
+        val origin: File = File(versions, "1.8.9")
         val originJson = File(origin, "1.8.9.json")
         val originJar = File(origin, "1.8.9.jar")
         val targetJson = File(target, "Hyperium 1.8.9.json")
@@ -51,7 +51,7 @@ object Utils {
             throw Exception()
         }
 
-        val lib = JsonHolder()
+        val lib: JsonHolder = JsonHolder()
         lib.put("name", "cc.hyperium:Hyperium:LOCAL")
         val libs = json.optJSONArray("libraries")
         libs.add(lib.getObject())
@@ -63,31 +63,32 @@ object Utils {
         json.put("minecraftArguments", json.optString("minecraftArguments") + " --tweakClass=cc.hyperium.launch.HyperiumTweaker")
 
         val profiles = launcherProfiles.optJSONObject("profiles")
-        val instant = ofEpochMilli(System.currentTimeMillis())
-        var installedUUID = UUID.randomUUID().toString()
+        var installedUUID: String = UUID.randomUUID().toString()
         for (key in profiles.keys) {
-            if (profiles.optJSONObject(key).has("name"))
-                if (profiles.optJSONObject(key).optString("name") == "Hyperium 1.8.9")
-                    installedUUID = key
+            if (profiles.optJSONObject(key).has("name") && profiles.optJSONObject(key).optString("name") == "Hyperium 1.8.9") {
+                installedUUID = key
+            }
         }
-        val p = theProfile(instant)
+        val p = theProfile()
     }
 
-    private fun theProfile(instant: Instant) {
+    private fun theProfile(): JsonHolder {
+        val instant: String = ofEpochMilli(System.currentTimeMillis()).toString()
         val sep = File.separator
-        val profile = JsonHolder()
+        val profile: JsonHolder = JsonHolder()
                 .put("name", "Hyperium 1.8.9")
                 .put("type", "custom")
-                .put("created", instant.toString())
-                .put("lastUsed", instant.toString())
+                .put("created", instant)
+                .put("lastUsed", instant)
                 .put("lastVersionId", "Hyperium 1.8.9")
-                .put("javaArgs", "-Duser.country=US -Duser.language=en -Xms512M -Xmx" + config.getWam() + "G")
+                .put("javaArgs", "-Duser.country=US -Duser.language=en -Xms512M -Xmx3G")
                 .put("icon", iconInBase64)
-        if (System.getProperty("java.version").startsWith("1.8"))
-            if (System.getProperty("sun.arch.data.model", "").equals("64", ignoreCase = true)) {
-                val file = File(System.getProperty("java.home"), "bin" + sep + "java" + if (getOS() === Windows) "w.exe" else "")
-                if (file.exists())
-                    profile.put("javaDir", file.absolutePath)
+        if (System.getProperty("java.version").startsWith("1.8") && System.getProperty("sun.arch.data.model", "").equals("64", ignoreCase = true)) {
+            val file = File(System.getProperty("java.home"), "bin" + sep + "java" + if (getOS() === Windows) "w.exe" else "")
+            if (file.exists()) {
+                profile.put("javaDir", file.absolutePath)
             }
+        }
+        return profile
     }
 }
