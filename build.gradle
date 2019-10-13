@@ -89,9 +89,12 @@ artifacts {
 
 shadowJar {
     dependsOn sourceJar
+    
     manifest {
         project.tasks.jar.manifest
     }
+    exclude "org/apache/logging", "org/apache/logging/**"
+    exclude "com/google", "com/google/**"
     configurations = [project.configurations.compile, project.configurations.embed]
     relocate 'org.apache.http', 'com.hyperiumjailbreak.http'
 }
