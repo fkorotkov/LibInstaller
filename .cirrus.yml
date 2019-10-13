@@ -5,6 +5,6 @@ build_task:
     gradle build
     gradle sourceJar
     gradle shadowJar
-  build_artifacts:
+  jar_artifacts:
     path: build/libs/**
     type: application/java-archive
