@@ -72,6 +72,8 @@ jar {
     }
     from 'LICENSE'
     exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+    exclude 'kotlin', 'kotlin/**'
+    exclude 'org/apache', 'org/apache/**'
     manifest.attributes(
         "Manifest-Version": 1.0
     )
@@ -96,6 +98,7 @@ shadowJar {
         project.tasks.jar.manifest
     }
     exclude "org/apache/logging", "org/apache/logging/**"
+    exclude "org/apache/commons", "org/apache/commons/**"
     exclude "com/google", "com/google/**"
     exclude "kotlin", "kotlin/**"
     configurations = [project.configurations.compile, project.configurations.embed]
