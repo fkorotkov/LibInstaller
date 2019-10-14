@@ -5,11 +5,8 @@ import com.google.common.io.Files
 import com.hyperiumjailbreak.backend.callback.Callback
 import com.hyperiumjailbreak.backend.utils.DownloadTask
 import com.hyperiumjailbreak.backend.utils.Utils
-import org.apache.logging.log4j.LogManager
 import java.io.File
 import java.io.IOException
-
-val logger = LogManager.getLogger()!!
 
 @Suppress("UnstableApiUsage")
 object InstallationUtils {
@@ -25,12 +22,12 @@ object InstallationUtils {
         val mc = Utils.getMinecraftDirectory()
         val libraries = File(mc, "versions")
 
-        if (mc.exists()) {
-            logger.info("Found MC Dir")
-        }
         if (!mc.exists()) {
             logger.fatal("No MC Dir")
+            callback.sendText("You need to install Minecraft first!")
+            callback.sendCode(2)
         } else {
+            println("Found MC Dir")
             val versions = File(mc, "versions")
             val origin = File(versions, "1.8.9")
             val originJson = File(origin, "1.8.9.json")
