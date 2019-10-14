@@ -48,7 +48,7 @@ repositories {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget= "1.8"
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -75,6 +75,7 @@ jar {
     manifest.attributes(
         "Manifest-Version": 1.0
     )
+    classifier 'base'
 }
 
 task sourceJar(type: Jar, dependsOn: 'jar') {
@@ -85,16 +86,18 @@ task sourceJar(type: Jar, dependsOn: 'jar') {
 artifacts {
     archives jar
     archives sourceJar
+    archives shadowJar
 }
 
 shadowJar {
     dependsOn sourceJar
-    
+    classifier ''
     manifest {
         project.tasks.jar.manifest
     }
     exclude "org/apache/logging", "org/apache/logging/**"
     exclude "com/google", "com/google/**"
+    exclude "kotlin", "kotlin/**"
     configurations = [project.configurations.compile, project.configurations.embed]
     relocate 'org.apache.http', 'com.hyperiumjailbreak.http'
 }

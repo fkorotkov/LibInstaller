@@ -18,11 +18,13 @@ package cc.hyperium.installer;/*
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * JSON Holder Object
+ */
 public class JsonHolder {
     private JsonObject object;
 
@@ -30,6 +32,11 @@ public class JsonHolder {
         this.object = object;
     }
 
+    /**
+     * Constructor for creating object with raw JSON.
+     *
+     * @param raw String of the raw JSON
+     */
     public JsonHolder(String raw) {
         if (raw == null || raw.isEmpty()) {
             object = new JsonObject();
@@ -43,10 +50,18 @@ public class JsonHolder {
         }
     }
 
+    /**
+     * Creates an instance of JsonHolder with a empty JsonObject.
+     */
     public JsonHolder() {
         this(new JsonObject());
     }
 
+    /**
+     * Get the JSON object as a {@link java.lang.String}.
+     *
+     * @return the object as a String
+     */
     @Override
     public String toString() {
         if (object != null)
@@ -54,6 +69,13 @@ public class JsonHolder {
         return "{}";
     }
 
+    /**
+     * Put a key/value inside the JSON object.
+     *
+     * @param key The key for the dictionary
+     * @param value The value to be associated with the key
+     * @return the updated instance of this class
+     */
     public JsonHolder put(String key, String value) {
         object.addProperty(key, value);
         return this;
@@ -75,10 +97,22 @@ public class JsonHolder {
         }
     }
 
+    /**
+     * Get a JSON array from the JSON object if it exists, otherwise get an empty JSON array.
+     *
+     * @param key The key to get the array for
+     * @return The item for the specified key if it exists, otherwise an empty JSON array.
+     */
     public JsonArray optJSONArray(String key) {
         return optJSONArray(key, new JsonArray());
     }
 
+    /**
+     * Returns if the JSON object has the named key.
+     *
+     * @param key The key to check for
+     * @return The boolean value of if the key is in the JSON object
+     */
     public boolean has(String key) {
         return object.has(key);
     }
@@ -87,6 +121,12 @@ public class JsonHolder {
         return optJSONObject(key, new JsonObject());
     }
 
+    /**
+     * Get a {@link java.lang.String String} by specified key from the JSON object if it exists.
+     *
+     * @param key The key to attempt to get the value for
+     * @return The key if it exists, otherwise just an empty {@link java.lang.String String}
+     */
     public String optString(String key) {
         try {
             return object.get(key).getAsString();
@@ -95,10 +135,20 @@ public class JsonHolder {
         }
     }
 
+    /**
+     * Get a {@link java.util.List List} of the keys in the JSON object.
+     *
+     * @return A list of {@link java.lang.String Strings}, a value for each key
+     */
     public List<String> getKeys() {
         return object.entrySet().stream().map(Map.Entry::getKey).collect(Collectors.toList());
     }
 
+    /**
+     * Get the object in {@link com.google.gson.JsonObject JsonObject} form.
+     *
+     * @return The object in {@link com.google.gson.JsonObject JsonObject} form
+     */
     public JsonObject getObject() {
         return object;
     }
@@ -112,6 +162,13 @@ public class JsonHolder {
         return this;
     }
 
+    /**
+     * Put a JSON array inside the object by the named key.
+     *
+     * @param key The key to use.
+     * @param value The key's value as a {@link com.google.gson.JsonArray JsonArray}.
+     * @return The new instance of this class
+     */
     public JsonHolder put(String key, JsonArray value) {
         this.object.add(key, value);
         return this;
