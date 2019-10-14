@@ -60,7 +60,7 @@ object InstallationUtils {
 
                 val tmpDir = java.nio.file.Files.createTempDirectory("Hyperium").toFile()
 
-                val optifine = File(tmpDir, DownloadTask("https://raw.githubusercontent.com/hyperiumjailbreak/tools/master/OptiFine_1.8.9_HD_U_I7.jar", tmpDir.toString()).download())
+                val optifine = File(tmpDir, DownloadTask("https://hyperiumjailbreak.mycloudrepo.io/public/repositories/addons/OptiFine_1.8.9_HD_U_I7.jar", tmpDir.toString()).download())
 
                 val targetJson = File(target, "Hyperium 1.8.9.json")
                 val targetJar = File(target, "Hyperium 1.8.9.jar")
