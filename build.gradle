@@ -18,7 +18,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-version = "0.2"
+version = "0.3"
 
 configurations {
     embed

@@ -1,15 +1,14 @@
 package com.hyperiumjailbreak.backend.utils
 
-import com.hyperiumjailbreak.backend.logger
+import com.hyperiumjailbreak.backend.callback.Callback
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLDecoder
 import java.util.regex.Pattern
 
-class DownloadTask(private val downloadURL: String, private val saveDirectory: String) {
+class DownloadTask(private val downloadURL: String, private val saveDirectory: String, private val callback: Callback) {
     private var fileName: String? = null
 
     init {
@@ -36,8 +35,9 @@ class DownloadTask(private val downloadURL: String, private val saveDirectory: S
             if (fileName == null) fileName = this.downloadURL.substring(this.downloadURL.lastIndexOf("/") + 1)
             fileName = URLDecoder.decode(fileName!!, "UTF-8")
         } else {
-            logger.fatal(httpConn.responseCode)
-            throw IOException(httpConn.responseCode.toString())
+            println("! - Got code ${httpConn.responseCode} from server!")
+            this.callback.sendCode(2)
+            this.callback.sendText("Failed to download a file!")
         }
         val inputStream = httpConn.inputStream
         val saveFilePath = File(saveDirectory, this.fileName!!)

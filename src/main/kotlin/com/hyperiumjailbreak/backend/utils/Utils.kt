@@ -1,8 +1,8 @@
 package com.hyperiumjailbreak.backend.utils
 
+import com.hyperiumjailbreak.backend.callback.Callback
 import cc.hyperium.installer.JsonHolder
 import com.google.common.io.Files
-import com.hyperiumjailbreak.backend.logger
 import com.hyperiumjailbreak.backend.utils.OS.*
 import org.apache.commons.io.FileUtils
 import java.io.File
@@ -37,11 +37,12 @@ object Utils {
         }
     }
 
-    fun downloadLaunchWrapper(libraries: File) {
+    fun downloadLaunchWrapper(libraries: File, callback: Callback) {
         val launchWrapper = File(libraries, "net" + sep + "minecraft" + sep + "launchwrapper" + sep + "1.7" + sep + "launchwrapper-1.7.jar")
         launchWrapper.parentFile.mkdirs()
         if (!launchWrapper.exists()) {
-            DownloadTask("https://libraries.minecraft.net/net/minecraft/launchwrapper/1.7/launchwrapper-1.7.jar", launchWrapper.parentFile.absolutePath)
+            println("Downloading LaunchWrapper")
+            DownloadTask("https://libraries.minecraft.net/net/minecraft/launchwrapper/1.7/launchwrapper-1.7.jar", launchWrapper.parentFile.absolutePath, callback)
         }
     }
 
@@ -54,7 +55,7 @@ object Utils {
             json = JsonHolder(Files.asCharSource(targetJson, Charset.defaultCharset()).read())
             launcherProfiles = JsonHolder(Files.asCharSource(File(mc, "launcher_profiles.json"), Charset.defaultCharset()).read())
         } catch (ex: IOException) {
-            logger.fatal("Failed to read launcher profiles")
+            println("! - Failed to read launcher profiles")
             throw Exception()
         }
         lib.put("name", "cc.hyperium:Hyperium:LOCAL")
@@ -80,18 +81,19 @@ object Utils {
             Files.asCharSink(targetJson, Charset.defaultCharset()).write(json.toString())
             Files.asCharSink(File(mc, "launcher_profiles.json"), Charset.defaultCharset()).write(launcherProfiles.toString())
         } catch (ex: IOException) {
-            logger.fatal("Failed to write profile")
-            return
+            println("! - Failed to write profile (${ex.message})")
         }
     }
 
     @Throws(IOException::class)
     fun deleteOldFiles(target: File) {
         if (target.exists()) {
+            println("Deleting old files...")
             FileUtils.deleteDirectory(target)
         }
         // the phoenix of the target rises from the ashes
         target.mkdirs()
+        println("Created install target directory")
     }
 
     fun checkForClient(origin: File, originJar: File, originJson: File): Boolean {
@@ -104,15 +106,18 @@ object Utils {
     }
 
     fun patchOptifine(libraries: File, optifine: File, originJar: File) {
+        println("Patching OptiFine...")
         try {
             val optifineLibDir = File(libraries, sep + "optifine" + sep + "OptiFine" + sep + "1.8.9_HD_U_I7")
             optifineLibDir.mkdirs()
+            println("Created OptiFine library directory")
             val optifineLib = File(optifineLibDir, "OptiFine-1.8.9_HD_U_I7.jar")
 
             val patcher = getJvmClass(optifine.toURI().toURL(), "optifine.Patcher")
             val main = patcher.getMethod("main", Array<String>::class.java)
             main.invoke(null, arrayOf<Any>(arrayOf(originJar.absolutePath, optifine.absolutePath, optifineLib.getAbsolutePath())))
         } catch (ex: Exception) {
+            println("! - Couldn't patch OptiFine!")
             ex.printStackTrace()
             return
         }
@@ -122,6 +127,7 @@ object Utils {
 
     @Throws(IOException::class)
     fun copyVersion(originJar: File, originJson: File, targetJar: File, targetJson: File) {
+        println("Copying originJson and originJar to targetJson and targetJar")
         FileUtils.copyFile(originJson, targetJson)
         FileUtils.copyFile(originJar, targetJar)
     }
@@ -131,6 +137,7 @@ object Utils {
         var ram = "3"
         val systemValue: String? = System.getenv("memory")
         if (systemValue != null) {
+            println("User has specified {$systemValue} as how much RAM they want")
             ram = systemValue
         }
         val profile: JsonHolder = JsonHolder()

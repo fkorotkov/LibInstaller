@@ -18,12 +18,13 @@ object InstallationUtils {
     }
 
     fun install() {
+        println("Starting...")
         val sep = File.separator
         val mc = Utils.getMinecraftDirectory()
         val libraries = File(mc, "versions")
 
         if (!mc.exists()) {
-            logger.fatal("No MC Dir")
+            println("! - No MC Dir")
             callback.sendText("You need to install Minecraft first!")
             callback.sendCode(2)
         } else {
@@ -36,7 +37,7 @@ object InstallationUtils {
             if (Utils.checkForClient(origin, originJar, originJson)) {
                 callback.sendText("You need to run Minecraft 1.8.9 first!")
                 callback.sendCode(2)
-                logger.fatal("No 1.8.9")
+                println("! - No 1.8.9")
             } else {
                 val target = File(versions, "Hyperium 1.8.9")
                 val libs = File(mc, "libraries")
@@ -50,14 +51,14 @@ object InstallationUtils {
                     localLib.parentFile.mkdirs()
                     Files.copy(local, File(localLib.parent, localLib.name))
                 } catch (e: IOException) {
-                    logger.fatal(e.message)
+                    println("! - e.message")
                     callback.sendCode(2)
                     callback.sendText("Couldn't copy local Jar")
                 }
 
                 val tmpDir = java.nio.file.Files.createTempDirectory("Hyperium").toFile()
 
-                val optifine = File(tmpDir, DownloadTask("https://hyperiumjailbreak.mycloudrepo.io/public/repositories/addons/OptiFine_1.8.9_HD_U_I7.jar", tmpDir.toString()).download())
+                val optifine = File(tmpDir, DownloadTask("https://hyperiumjailbreak.mycloudrepo.io/public/repositories/addons/OptiFine_1.8.9_HD_U_I7.jar", tmpDir.toString(), callback).download())
 
                 val targetJson = File(target, "Hyperium 1.8.9.json")
                 val targetJar = File(target, "Hyperium 1.8.9.jar")
@@ -67,7 +68,7 @@ object InstallationUtils {
                 val addonsDir = File(mc, "addons")
                 if (!addonsDir.exists()) addonsDir.mkdirs()
 
-                Utils.downloadLaunchWrapper(libraries)
+                Utils.downloadLaunchWrapper(libraries, callback)
 
                 Utils.patchOptifine(libraries, optifine, originJar)
 
