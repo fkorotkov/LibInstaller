@@ -1,7 +1,6 @@
 package com.hyperiumjailbreak.backend.utils
 
 import com.hyperiumjailbreak.backend.callback.Callback
-import cc.hyperium.installer.JsonHolder
 import com.google.common.io.Files
 import com.hyperiumjailbreak.backend.utils.OS.*
 import org.apache.commons.io.FileUtils
@@ -60,9 +59,9 @@ object Utils {
         }
         lib.put("name", "cc.hyperium:Hyperium:LOCAL")
         val libs = json.optJSONArray("libraries")
-        libs.add(lib.getObject())
-        libs.add(JsonHolder().put("name", "net.minecraft:launchwrapper:Hyperium").getObject())
-        libs.add(JsonHolder().put("name", "optifine:OptiFine:1.8.9_HD_U_I7").getObject())
+        libs.add(lib.obj)
+        libs.add(JsonHolder().put("name", "net.minecraft:launchwrapper:Hyperium").obj)
+        libs.add(JsonHolder().put("name", "optifine:OptiFine:1.8.9_HD_U_I7").obj)
         json.put("libraries", libs)
         json.put("id", "Hyperium 1.8.9")
         json.put("mainClass", "net.minecraft.launchwrapper.Launch")
@@ -70,7 +69,7 @@ object Utils {
 
         val profiles = launcherProfiles.optJSONObject("profiles")
         var installedUUID: String = UUID.randomUUID().toString()
-        for (key in profiles.keys) {
+        for (key in profiles.getKeys()) {
             if (profiles.optJSONObject(key).has("name") && profiles.optJSONObject(key).optString("name") == "Hyperium 1.8.9") {
                 installedUUID = key
             }
@@ -115,7 +114,7 @@ object Utils {
 
             val patcher = getJvmClass(optifine.toURI().toURL(), "optifine.Patcher")
             val main = patcher.getMethod("main", Array<String>::class.java)
-            main.invoke(null, arrayOf<Any>(arrayOf(originJar.absolutePath, optifine.absolutePath, optifineLib.getAbsolutePath())))
+            main.invoke(null, arrayOf<Any>(arrayOf<String>(originJar.absolutePath, optifine.absolutePath, optifineLib.absolutePath)))
         } catch (ex: Exception) {
             println("! - Couldn't patch OptiFine!")
             ex.printStackTrace()
