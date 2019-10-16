@@ -14,11 +14,10 @@ buildscript {
 }
 
 apply plugin: 'kotlin'
-apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-version = "0.3"
+version = "0.4"
 
 configurations {
     embed
@@ -48,9 +47,6 @@ repositories {
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
-
-compileJava.options.encoding = 'UTF-8'
-compileJava.options.compilerArgs << "-Xlint:none"
 
 processResources {
     inputs.files "src/main/resources"
