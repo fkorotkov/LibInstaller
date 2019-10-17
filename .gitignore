@@ -29,3 +29,8 @@ hs_err_pid*
 .idea
 out
 **/scratch.*
+
+.classpath
+.project
+.settings
+bin
