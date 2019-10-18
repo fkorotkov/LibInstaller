@@ -9,14 +9,14 @@ buildscript {
     }
     dependencies {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:5.1.0'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.0'
     }
 }
 
 apply plugin: 'kotlin'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-version = "0.4"
+version = "0.5"
 
 configurations {
     embed
@@ -67,6 +67,7 @@ jar {
     exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
     exclude 'kotlin', 'kotlin/**'
     exclude 'org/apache', 'org/apache/**'
+    exclude 'META-INF/services', 'META-INF/services/**'
     manifest.attributes(
         "Manifest-Version": 1.0
     )
