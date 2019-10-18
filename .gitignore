@@ -34,3 +34,6 @@ out
 .project
 .settings
 bin
+.theia
+dependency-reduced-pom.xml
+target
