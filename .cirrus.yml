@@ -5,8 +5,11 @@ build_task:
     MVN_VER: 3.6.2
   download_maven_script: |
     cd /tmp/
-    curl -o- -L https://www-us.apache.org/dist/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz
+    echo "here"
+    curl -v -o- -L https://www-us.apache.org/dist/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz
+    echo "here 2"
     tar xzvf apache-maven-${MVN_VER}-bin.tar.gz
+    echo "here 3"
     cp ./apache-maven-${MVN_VER}-bin/mvn /home/
   make_jars_script: /home/mvn package
   jar_artifacts:
