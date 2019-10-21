@@ -1,8 +1,14 @@
 build_task:
   container:
     image: platpus/javafx:latest
-  make_jars_script: |
-    mvn package
+  env:
+    MVN_VER: 3.6.2
+  download_maven_script: |
+    cd /tmp/
+    curl -o- -L https://www-us.apache.org/dist/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz
+    tar xzvf apache-maven-${MVN_VER}-bin.tar.gz
+    cp ./apache-maven-${MVN_VER}-bin/mvn /home/
+  make_jars_script: /home/mvn package
   jar_artifacts:
     path: target/*.jar
     type: application/java-archive
