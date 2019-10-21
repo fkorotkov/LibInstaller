@@ -2,8 +2,7 @@ build_task:
   container:
     image: platpus/javafx:latest
   make_jars_script: |
-    chmod +x ./gradlew
-    ./gradlew build
+    mvn package
   jar_artifacts:
-    path: ./build/libs/*.jar
+    path: target/*.jar
     type: application/java-archive
