@@ -1,0 +1,10 @@
+image: gitpod/workpace-full
+
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/44_config_start_tasks/
+tasks:
+- init: echo 'Welcome' # runs during prebuild
+  command: echo 'Ready'
+
+vscode:
+  extensions:
+    - mathiasfrohlich.Kotlin@1.7.0:9xQZtwTUg4bdXHCMyxM7vQ==

@@ -70,7 +70,12 @@ object InstallationUtils {
 
                 Utils.downloadLaunchWrapper(libraries, callback)
 
-                Utils.patchOptifine(libraries, optifine, originJar)
+                val e = Utils.patchOptifine(libraries, optifine, originJar)
+                if(e == "uh oh") {
+                    callback.sendCode(2)
+                    callback.sendText("OptiFinePatcher failed. Please report this bug!")
+                    return
+                }
 
                 Utils.buildAndSetLauncherProfiles(mc, target)
             }

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.hyperiumjailbreak</groupId>
     <artifactId>LibInstaller</artifactId>
-    <version>0.6</version>
+    <version>0.8</version>
     <inceptionYear>2019</inceptionYear>
     <description>New installer for HyperiumJailbreak.</description>
     <packaging>jar</packaging>
@@ -78,8 +78,9 @@
                             </relocations>
                             <artifactSet>
                                 <excludes>
-                                    <exclude>com.google:*</exclude>
-                                    <exclude>com.google.code:*</exclude>
+                                    <exclude>commons-logging:*</exclude>
+                                    <exclude>com.google.code.gson:*</exclude>
+                                    <exclude>com.google.guava:*</exclude>
                                     <exclude>org.jetbrains.kotlin:*</exclude>
                                 </excludes>
                             </artifactSet>

@@ -104,7 +104,7 @@ object Utils {
         return URLClassLoader(arrayOf(url)).loadClass(c)
     }
 
-    fun patchOptifine(libraries: File, optifine: File, originJar: File) {
+    fun patchOptifine(libraries: File, optifine: File, originJar: File): String {
         println("Patching OptiFine...")
         try {
             val optifineLibDir = File(libraries, sep + "optifine" + sep + "OptiFine" + sep + "1.8.9_HD_U_I7")
@@ -115,10 +115,11 @@ object Utils {
             val patcher = getJvmClass(optifine.toURI().toURL(), "optifine.Patcher")
             val main = patcher.getMethod("main", Array<String>::class.java)
             main.invoke(null, arrayOf<Any>(arrayOf<String>(originJar.absolutePath, optifine.absolutePath, optifineLib.absolutePath)))
+            return "did it"
         } catch (ex: Exception) {
             println("! - Couldn't patch OptiFine!")
             ex.printStackTrace()
-            return
+            return "uh oh"
         }
 
         optifine.delete()
@@ -140,7 +141,7 @@ object Utils {
             ram = systemValue
         }
         val profile: JsonHolder = JsonHolder()
-                .put("name", "Hyperium 1.8.9")
+                .put("name", "HyperiumJailbreak 1.8.9")
                 .put("type", "custom")
                 .put("created", instant)
                 .put("lastUsed", instant)
